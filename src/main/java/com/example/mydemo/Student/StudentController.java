@@ -40,5 +40,6 @@ public class StudentController {
         studentService.UpdateStudentNameAndEmail(id,name,email);
     }
 
+    
 
 }
