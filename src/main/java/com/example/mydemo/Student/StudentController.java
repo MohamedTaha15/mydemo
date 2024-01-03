@@ -34,8 +34,10 @@ public class StudentController {
     }
 
     @PutMapping(path = "{studentid}")
-    public void UpdateStudent(@PathVariable("studentid") Long id, @RequestBody String name){
-        studentService.UpdateStudentName(id,name);
+    public void UpdateStudent(@PathVariable("studentid") Long id,
+                              @RequestParam(required = false) String name,
+                              @RequestParam(required = false) String email){
+        studentService.UpdateStudentNameAndEmail(id,name,email);
     }
 
 
