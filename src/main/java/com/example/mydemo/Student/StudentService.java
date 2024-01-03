@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -17,14 +18,39 @@ public class StudentService {
         return studentRepository.findAll();
 
         /*List.of(
-               *//* new Student(
-                        20191844L,
-                        "Mohamed Taha",
-                        "mohamedtaha.9718@gmail.com",
-                        LocalDate.of(1999, Month.JANUARY,30),
-                        25
-                )*//*
+               *//* *//*
         );*/
+
+    }
+
+    public void AddNewStudent(Student student){
+
+        Optional<Student> studentByEmail = studentRepository.findByEmail(student.getEmail());
+        if (studentByEmail.isPresent()){
+            throw new IllegalStateException("Email already exists");
+        }
+        studentRepository.save(student);
+
+        /*System.out.println(student);*/
+    }
+
+    public void DeleteStudentById(Long id){
+        Optional<Student> deleteStudent = studentRepository.findById(id);
+        if (deleteStudent.isEmpty()){
+            throw new IllegalStateException("Invalid Id, Student with id: " + id + " does not exist");
+        }
+        studentRepository.deleteById(id);
+
+    }
+
+    public void UpdateStudentName(Long id,String name){
+        Optional<Student> updatestudent = studentRepository.findById(id);
+        if (updatestudent.isEmpty()){
+            throw new IllegalStateException("Invalid Id, Student with id: " + id + " does not exist");
+        }
+        Student updatestudent1 = studentRepository.findStudentById(id);
+        updatestudent1.setName(name);
+        studentRepository.save(updatestudent1);
 
     }
 }
